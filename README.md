@@ -22,7 +22,7 @@ P.S.
 Do not forget add directory `~/.local/bin` to your path! This is not necessary, but much comfortable to work!
 
 ![Screenshot](screen.png?raw=true "Clear")
-![Screenshot](screen.png?raw=true "Notification")
-![Screenshot](screen.png?raw=true "Bussy")
+![Screenshot](screen_1.png?raw=true "Notification")
+![Screenshot](screen_2.png?raw=true "Bussy")
 
 
