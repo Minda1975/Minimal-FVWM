@@ -1,0 +1,112 @@
+# fvwm window configuration
+# for tom hayden <thayden@gmail.com>
+
+# Font
+WindowFont  xft:Iosevka:Bold:pixelsize=15
+DefaultFont   xft:Iosevka:pixelsize=12
+
+# limited number of desktops 
+DeskTopName 0 Main DeskTop
+DesktopName 1 Secondary Desktop
+DeskTopName 2 Tertiary Desktop
+DeskTopSize 3x1
+MenuStyle * FVWM
+MenuStyle * Foreground black, Background white, Greyed #c90 
+MenuStyle * Font xft:Monospace:pixelsize=14
+
+# setup root-menu and populate it
+Mouse 1 R A Menu Root-Menu Nop
+AddtoMenu Root-Menu "Firefox" \
+  Exec exec firefox
++ "xterm" Exec exec xterm -fn -misc-fixed-*-*-*-*-18-*-*-*-*-*-*-* -geometry 85x30+0+0
++ "Audio" Exec exec xterm -e mocp 
++ "Transmissiom" Exec exec transmission-gtk
++ "" Nop
++ "Restart" Restart
++ "" Nop
++ "Exit Fvwm" Quit
+
+# setup Titlestyle stuff
+TitleStyle LeftJustified Height 28 -- flat
+TitleStyle ActiveUp Solid #0E72D3 -- flat 
+TitleStyle ActiveDown Solid #0E72D3 -- flat
+TitleStyle InactiveUp Solid Gray -- flat
+
+
+DestroyFunc CenterWindow
+AddToFunc   CenterWindow
++ I ThisWindow Piperead "echo Move \
+ +$(( $[vp.width]/2-$[w.width]/2 ))p \
+ +$(( $[vp.height]/2-$[w.height]/2 ))p"
+
+# allow for screen locking and other things
+# control-F to maximize, control-C to center
+Key W A 4 Close
+Key C A 4 CenterWindow
+Key Escape A 4 Exec exec slock
+Key Super_R A A Exec exec dmenu_run
+Key Return A 4 Exec xterm -fn -misc-fixed-*-*-*-*-18-*-*-*-*-*-*-* -geometry 85x30+0+0
+Key F12 A 4 Quit
+Key F A 4 Maximize 90 100
+Key I A 4 Iconify
+
+# ignore numlock and caps lock weirdness
+IgnoreModifiers L25
+
+# handle window changes nicely
+Module FvwmAuto 1000 Raise Nop
+Style * ClickToFocus
+Style * BorderWidth 0, HandleWidth 2
+Style * Color White/Gray
+Style * MWMFunctions, MWMDecor, MWMButtons, HintOverride, OLDecor
+Style * DecorateTransient
+
+# handle desktop edges, we dont want them for desktop switching
+EdgeScroll 0 0
+EdgeThickness 0
+Key Right A 4 GotoDesk 0 0
+Key Left A 4 GotoDesk 0 1
+
+DestroyFunc StartFunction
+AddToFunc   StartFunction
++ I Test (Init) Schedule 10000 Exec exec conky
+DestroyFunc InitFunction
+AddToFunc InitFunction
++ I Exec exec setxkbmap -layout "us,lt,ru" -option "grp:ctrl_alt_toggle"
+
+# setup backgrounds with cool galaxy image
+Module FvwmBacker
+*FvwmBackerDesk 0 Exec xpmroot $[HOME]/.fvwm/galaxies.xpm
+
+
+# stolen from Knuth, add a button in upper right hand corner to kill
+# the window. is a lightning bolt
+Mouse 0 1 A Close
+ButtonStyle 1 Vector 7 \
+  65x15@0 25x55@1 45x55@0 35x85@1 75x45@0 55x45@1 65x15@0
+ButtonStyle 1 - MWMDecorMenu
+
+# add button in upper right to iconify
+Mouse 0 2 A Iconify
+ButtonStyle 2 Vector 5 40x40@1 60x40@1 60x60@0 40x60@0 40x40@1
+ButtonStyle 2 - MWMDecorMin
+
+# this basically allows you to uniconify by double clicking
+Mouse 1 F A Resize-or-Raise
+Mouse 1 TS A Move-or-Raise
+Mouse 1 I A Move-or-DeIconify
+AddToFunc Resize-or-Raise "I" Raise
++ "M" Resize
++ "D" Lower
+AddToFunc Move-or-Raise "I" Raise
++ "M" Move
++ "D" Lower
+AddToFunc Move-or-DeIconify "I" Raise
++ "M" Move
++ "D" Iconify
+
+
+# fire xterm on boot, fit to work
+AddToFunc InitFunction "I" Echo initializing...
++ "I" Desk 0 0
+Exec exec xterm -fn -misc-fixed-*-*-*-*-18-*-*-*-*-*-*-* -geometry 85x30+0+0
