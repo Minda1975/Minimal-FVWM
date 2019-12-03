@@ -24,5 +24,6 @@ Do not forget add directory `~/.local/bin` to your path! This is not necessary, 
 ![Screenshot](screen.png?raw=true "Clear")
 ![Screenshot](screen_1.png?raw=true "Notification")
 ![Screenshot](screen_2.png?raw=true "Bussy")
+![Screenshot](screen_3.png?raw=true "Bussy")
 
 
