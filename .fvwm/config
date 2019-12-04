@@ -1,95 +1,54 @@
-# fvwm window configuration
-# for tom hayden <thayden@gmail.com>
+#Script path
+SetEnv scripts $[HOME]/.fvwm/scripts
 
 # Font
 WindowFont  xft:Iosevka:Bold:pixelsize=15
 DefaultFont   xft:Iosevka:pixelsize=12
 
-# limited number of desktops 
-DeskTopName 0 Main DeskTop
-DesktopName 1 Secondary Desktop
-DeskTopName 2 Tertiary Desktop
-DeskTopSize 3x1
-MenuStyle * FVWM
-MenuStyle * Foreground black, Background white, Greyed #c90 
+#Menu
+MenuStyle * Mwm
+MenuStyle * Background \#c0c0c0
+MenuStyle * Foreground \#000000
 MenuStyle * Font xft:Monospace:pixelsize=14
+
+#Autostart
+DestroyFunc StartFunction
+AddToFunc   StartFunction
++ I Module FvwmPager 0 2
++ I Test (Init) Schedule 10000 Exec exec conky
+Exec exec xsetroot -solid \#202020
+DestroyFunc InitFunction
+AddToFunc InitFunction
++ I Exec exec setxkbmap -layout "us,lt,ru" -option "grp:ctrl_alt_toggle"
++ I Exec exec uxterm -geometry 85x30+0+0
+
 
 # setup root-menu and populate it
 Mouse 1 R A Menu Root-Menu Nop
 AddtoMenu Root-Menu "Firefox" \
   Exec exec firefox
-+ "xterm" Exec exec xterm -fn -misc-fixed-*-*-*-*-18-*-*-*-*-*-*-* -geometry 85x30+0+0
-+ "Audio" Exec exec xterm -e mocp 
++ "Uxterm" Exec exec uxterm -geometry 85x30+0+0
++ "Audio" Exec exec uxterm -e mocp 
 + "Transmissiom" Exec exec transmission-gtk
 + "" Nop
 + "Restart" Restart
 + "" Nop
 + "Exit Fvwm" Quit
 
-# setup Titlestyle stuff
-TitleStyle LeftJustified Height 28 -- flat
-TitleStyle ActiveUp Solid #0E72D3 -- flat 
-TitleStyle ActiveDown Solid #0E72D3 -- flat
-TitleStyle InactiveUp Solid Gray -- flat
 
-
-DestroyFunc CenterWindow
-AddToFunc   CenterWindow
-+ I ThisWindow Piperead "echo Move \
- +$(( $[vp.width]/2-$[w.width]/2 ))p \
- +$(( $[vp.height]/2-$[w.height]/2 ))p"
-
-# allow for screen locking and other things
-# control-F to maximize, control-C to center
-Key W A 4 Close
-Key C A 4 CenterWindow
-Key Escape A 4 Exec exec slock
+# Keybindings
+# control-F to maximize
+Key C A 4 Close
+Key Escape A 4 Exec $[scripts]/shutdown.sh
 Key Super_R A A Exec exec dmenu_run
-Key Return A 4 Exec xterm -fn -misc-fixed-*-*-*-*-18-*-*-*-*-*-*-* -geometry 85x30+0+0
+Key Return A 4 Exec uxterm -geometry 85x30+0+0
 Key F12 A 4 Quit
 Key F A 4 Maximize 90 100
 Key I A 4 Iconify
 
+
 # ignore numlock and caps lock weirdness
 IgnoreModifiers L25
-
-# handle window changes nicely
-Module FvwmAuto 1000 Raise Nop
-Style * ClickToFocus
-Style * BorderWidth 0, HandleWidth 2
-Style * Color White/Gray
-Style * MWMFunctions, MWMDecor, MWMButtons, HintOverride, OLDecor
-Style * DecorateTransient
-
-# handle desktop edges, we dont want them for desktop switching
-EdgeScroll 0 0
-EdgeThickness 0
-Key Right A 4 GotoDesk 0 0
-Key Left A 4 GotoDesk 0 1
-
-DestroyFunc StartFunction
-AddToFunc   StartFunction
-+ I Test (Init) Schedule 10000 Exec exec conky
-DestroyFunc InitFunction
-AddToFunc InitFunction
-+ I Exec exec setxkbmap -layout "us,lt,ru" -option "grp:ctrl_alt_toggle"
-
-# setup backgrounds with cool galaxy image
-Module FvwmBacker
-*FvwmBackerDesk 0 Exec xpmroot $[HOME]/.fvwm/galaxies.xpm
-
-
-# stolen from Knuth, add a button in upper right hand corner to kill
-# the window. is a lightning bolt
-Mouse 0 1 A Close
-ButtonStyle 1 Vector 7 \
-  65x15@0 25x55@1 45x55@0 35x85@1 75x45@0 55x45@1 65x15@0
-ButtonStyle 1 - MWMDecorMenu
-
-# add button in upper right to iconify
-Mouse 0 2 A Iconify
-ButtonStyle 2 Vector 5 40x40@1 60x40@1 60x60@0 40x60@0 40x40@1
-ButtonStyle 2 - MWMDecorMin
 
 # this basically allows you to uniconify by double clicking
 Mouse 1 F A Resize-or-Raise
@@ -105,8 +64,110 @@ AddToFunc Move-or-DeIconify "I" Raise
 + "M" Move
 + "D" Iconify
 
+#Colors
+#   1 - Inactive Windows 
+#   2 - Active Window
+#   3 - Inactive Windows Borders
+#   4 - Active Windows Borders
+Colorset 1 fg white, bg #afbdc07ac200
+Colorset 2 fg white, bg #cc0068006f00
+Colorset 3 fg white, bg #afbdc07ac200
+Colorset 4 fg white, bg #cc0068006f00
 
-# fire xterm on boot, fit to work
-AddToFunc InitFunction "I" Echo initializing...
-+ "I" Desk 0 0
-Exec exec xterm -fn -misc-fixed-*-*-*-*-18-*-*-*-*-*-*-* -geometry 85x30+0+0
+# Window Button Locations [1 Title 42]
+Mouse 1 4 A Iconify
+Mouse 1 2 A Maximize
+Mouse 1 1 A Menu MenuWindowOpsLong
+
+#Decor
+AddToDecor CDEDecor
++ TitleStyle    AllInactive -- Raised
++ TitleStyle    AllActive -- Raised
++ ButtonStyle   All Simple -- UseTitleStyle
++ BorderStyle   Simple
++ TitleStyle    Centered -- Raised
++ ButtonStyle   All -- Raised
+
++ AddButtonStyle 1 Vector 3 23x58@0 77x58@0 77x42@0
++ AddButtonStyle 1 Vector 3 23x58@1 23x42@1 77x42@1
+
++ AddButtonStyle 2 Vector 3 21x79@0 79x79@0 79x21@0
++ AddButtonStyle 2 Vector 3 21x79@1 21x21@1 79x21@1
+
++ AddButtonStyle 4 Vector 3 42x58@0 58x58@0 58x42@0
++ AddButtonStyle 4 Vector 3 42x58@1 42x42@1 58x42@1
+
++ TitleStyle Height MinHeight 20
+
+
+#Style
+Emulate Mwm
+Style * Colorset 1, HilightColorset 2, \
+        BorderColorset 3, HilightBorderColorset 4, \
+        BorderWidth 5, HandleWidth 5, \
+        MWMBorder, DepressableBorder, \
+        MWMButtons, UseDecor CDEDecor
+
+Style * IconBox 1 -300 -1 -1, IconFill Left Bottom
+
+#Window Menu
+DestroyMenu MenuWindowOpsLong
+AddToMenu   MenuWindowOpsLong
++ "Resize"              Resize
++ "(De)Iconify"         Iconify
++ "(Un)Maximize"        Maximize
++ "(Un)Shade"           WindowShade
++ "(Un)Sticky"          Stick
++ "" Nop
++ "Close"               Close
++ "Destroy"             Destroy
++ "" Nop
++ "Raise"               Raise
++ "Lower"               Lower
+
+
+
+###############################################################################
+#                                                                             #
+# Global Behavior Commands                                                    #
+#                                                                             #
+###############################################################################
+
+
+
+#####
+# Virtual Desktops
+###########
+DesktopSize 3x3
+DesktopName 0 Main
+DesktopName 1 Work
+DesktopName 2 Terminals
+EdgeScroll 100 100
+EdgeResistance 150
+Style * EdgeMoveDelay 150
+Style * EdgeMoveResistance 150
+EdgeThickness 1
+
+###############################################################################
+#                                                                             #
+# Module: FvwmPager                                                           #
+#                                                                             #
+###############################################################################
+
+#####
+# FvwmPager
+###########
+Style "FvwmPager" NoTitle, Handles, Borders, Sticky, WindowListSkip, \
+  CirculateSkip, StaysOnBottom, FixedPosition, FixedSize
+
+
+###############################################################################
+*FvwmPager: Geometry 150x150+0+0
+*FvwmPager: BalloonYOffset +2
+*FvwmPager: Font "xft:Sans:Bold:pixelsize=12:minspace=True:antialias=True"
+*FvwmPager: Balloons All
+*FvwmPager: BalloonFont "xft:Sans:Bold:pixelsize=12:minspace=True:antialias=True"
+*FvwmPager: Window3dBorders
+*FvwmPager: MiniIcons
+*FvwmPager: UseSkipList
+*FvwmPager: Rows 3

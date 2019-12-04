@@ -1,7 +1,7 @@
 # Minimal-FVWM
 Minimal Fvwm configuration for Debian Buster system. With only 900 pkg you can hace a fully working system without bloating stuff. 
 
-FVWM config is based on Knuth config, but this was adapted for modern fvwm version (2.6.8) and cleared warnings in .xsession log.
+FVWM config is writen from scratch. It is emulated CDE decor, have FVWMPager that show the layout of your Virtual Desktop. It will show all the Pages and Desktops you have set up (i set up 3 Virtual Desktops with 3 pages 3x3 grid). No other FVWM modules are used, because i like clean and minimal set up.
 
 Dependencies:
 
