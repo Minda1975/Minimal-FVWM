@@ -61,19 +61,14 @@ conky.config = {
 }
 
 conky.text = [[
-${scroll 16 $nodename - $sysname $kernel on $machine | }
-$hr
 ${color grey}Uptime:$color $uptime
 ${color grey}Time:$color $time
-${color grey}Frequency (in MHz):$color $freq
-${color grey}Frequency (in GHz):$color $freq_g
-${color grey}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}
-${color grey}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}
-${color grey}CPU Usage:$color $cpu% ${cpubar 4}
+${color grey}RAM Usage:$color $mem/$memmax - $memperc% 
+${color grey}Swap Usage:$color $swap/$swapmax - $swapperc%
+${color grey}CPU Usage:$color $cpu% 
 ${color grey}Processes:$color $processes  ${color grey}Running:$color $running_processes
-$hr
 ${color grey}File systems:
- / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}
+ / $color${fs_used /}/${fs_size /}
 ${color grey}Networking:
 Up:$color ${upspeed enp8s0} ${color grey} - Down:$color ${downspeed enp8s0}
 $hr
