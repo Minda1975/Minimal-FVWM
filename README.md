@@ -21,6 +21,10 @@ P.S.
 
 Do not forget add directory `~/.local/bin` to your path! This is not necessary, but much comfortable to work!
 
+P.S.S.
+
+Also, i added color schemes for window decorations (it is in CdeColors folder). This folder contains 41 color themes with names such Alpine, Arizona etc. Just copy color definition to fvwm config and restart window manager.
+
 ![Screenshot](screen.png?raw=true "Clear")
 ![Screenshot](screen_1.png?raw=true "Notification")
 ![Screenshot](screen_2.png?raw=true "Bussy")
