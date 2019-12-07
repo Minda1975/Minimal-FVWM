@@ -166,16 +166,16 @@ Style Fvwm* Sticky
 Style Fvwm* !Title
 Style Fvwm* WindowListSkip
 
-# Color Scheme Spray
-Colorset 0 fg black, bg rgb:a4/aa/a9, hi, sh, Plain, NoShape
-Colorset 1 fg black, bg rgb:a4/aa/a9, hi, sh, Plain, NoShape
-Colorset 2 fg black, bg rgb:af/c9/df, hi, sh, Plain, NoShape
-Colorset 3 fg black, bg rgb:a4/aa/a9, hi, sh, Plain, NoShape
-Colorset 4 fg black, bg rgb:af/c9/df, hi, sh, Plain, NoShape
-Colorset 5 fg black, bg rgb:a4/aa/a9, hi, sh, Plain, NoShape
-Colorset 6 fg black, bg rgb:c2/b3/aa, hi, sh, Plain, NoShape
-Colorset 7 fg black, bg rgb:93/b4/b3, hi, sh, Plain, NoShape
-Colorset 8 fg black, bg rgb:a4/aa/a9, hi, sh, Plain, NoShape
+# Color Scheme Cabernet
+Colorset 0 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
+Colorset 1 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
+Colorset 2 fg white, bg #d80087c175bd, hi, sh, Plain, NoShape
+Colorset 3 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
+Colorset 4 fg white, bg #d80087c175bd, hi, sh, Plain, NoShape
+Colorset 5 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
+Colorset 6 fg white, bg #45f1620056c7, hi, sh, Plain, NoShape
+Colorset 7 fg white, bg #4b515e1b6100, hi, sh, Plain, NoShape
+Colorset 8 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
 
 
 Style * Colorset 1, HilightColorset 2, \
