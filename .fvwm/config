@@ -5,9 +5,9 @@
 ###############################################################################
 
 AddToMenu RootMenu "Root Menu" Title
-+ "&Terminal"         Exec exec x-terminal-emulator || uxterm -geometry 85x30+0+0
++ "&Terminal"         Exec exec x-terminal-emulator || xterm -geometry 85x30+0+0
 + "&Web"              Exec exec firefox
-+ "&Audio"            Exec exec uxterm -e mocp
++ "&Audio"            Exec exec xterm -e mocp
 + "&Torrents"         Exec exec transmission-gtk
 + ""                  Nop
 + "&Window Ops"       Popup Window-Ops
@@ -74,6 +74,7 @@ Mouse 1 I A           Move-or-Iconify
 Mouse 2 I A           Iconify
 Mouse 2 FST A         Menu Window-Ops Nop
 Mouse 3 TSIF A        RaiseLower
+Mouse 1         SF    A RaiseOrShade
 
 ###############################################################################
 #                                                                             #
@@ -86,12 +87,26 @@ AddToFunc StartFunction
 + I Module FvwmCommandS
 + I Module FvwmPager 0 2 
 + I Test (Init) Schedule 10000 Exec exec conky -q
-+ I  Exec exec xsetroot -solid \#284646
++ I  Exec exec xsetroot -solid \#5c2316
 
 DestroyFunc InitFunction
 AddToFunc InitFunction
 + I Exec exec setxkbmap -layout "us,lt,ru" -option "grp:ctrl_shift_toggle"
-+ I Exec exec uxterm -geometry 85x30+0+0
++ I Exec exec xterm -geometry 85x30+0+0
+
+DestroyFunc FuncShadeMe
+AddToFunc FuncShadeMe
++ I PipeRead `case $[func.context] in "t") \
+    echo 'ThisWindow (Shaded) WindowStyle TitleAtTop'; echo 'WindowShade toggle';; \
+    "[") echo 'ThisWindow (!Shaded) WindowStyle TitleAtLeft' && echo 'WindowShade [';; \
+    "]") echo 'ThisWindow (!Shaded) WindowStyle TitleAtRight' && echo 'WindowShade ]';; \
+    "-") echo 'ThisWindow (!Shaded) WindowStyle TitleAtTop' && echo 'WindowShade -';; \
+    "_") echo 'ThisWindow (!Shaded) WindowStyle TitleAtBottom' && echo 'WindowShade _';;esac`
+
+DestroyFunc RaiseOrShade
+AddToFunc   RaiseOrShade
++ C     Raise
++ D     FuncShadeMe
 
 DestroyFunc RestartFunction
 AddToFunc RestartFunction
@@ -137,7 +152,7 @@ AddToFunc Resize-or-Raise
 
 DefaultFont xft:Sans:Normal:size=10:antialias=True
 Emulate Mwm
-MenuStyle * Mwm
+MenuStyle * Fvwm
 Style * BorderWidth 6
 Style * ClickToFocus
 Style * DecorateTransient
@@ -147,10 +162,8 @@ Style * Font StringEncoding=UTF-8:xft:Sans:Bold:size=10:antialias=True
 Style * HandleWidth 6
 Style * HintOverride
 Style * IconBox 1 -300 -1 -1, IconFill Left Bottom
-Style * MwmBorder
-Style * MwmButtons
-Style * MwmDecor
-Style * MwmFunctions
+Style * FvwmBorder
+Style * FvwmButtons
 Style * TileCascadePlacement
 Style * !UsePPosition
 TitleStyle Centered Height 20
@@ -162,16 +175,16 @@ Style Fvwm* Sticky
 Style Fvwm* !Title
 Style Fvwm* WindowListSkip
 
-# Color Scheme Cabernet
-Colorset 0 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
-Colorset 1 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
-Colorset 2 fg white, bg #d80087c175bd, hi, sh, Plain, NoShape
-Colorset 3 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
-Colorset 4 fg white, bg #d80087c175bd, hi, sh, Plain, NoShape
-Colorset 5 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
-Colorset 6 fg white, bg #45f1620056c7, hi, sh, Plain, NoShape
-Colorset 7 fg white, bg #4b515e1b6100, hi, sh, Plain, NoShape
-Colorset 8 fg white, bg #63938a007aa1, hi, sh, Plain, NoShape
+# Color Scheme Prism
+Colorset 0 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
+Colorset 1 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
+Colorset 2 fg black, bg rgb:da/7d/2b, hi, sh, Plain, NoShape
+Colorset 3 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
+Colorset 4 fg black, bg rgb:da/7d/2b, hi, sh, Plain, NoShape
+Colorset 5 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
+Colorset 6 fg black, bg rgb:ba/81/6d, hi, sh, Plain, NoShape
+Colorset 7 fg white, bg rgb:2e/66/8e, hi, sh, Plain, NoShape
+Colorset 8 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
 
 
 Style * Colorset 1, HilightColorset 2, \
