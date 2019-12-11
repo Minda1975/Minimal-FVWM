@@ -14,26 +14,16 @@
 # These parameters defines twm look
 
 # These control various workspace colors.
-Color {
- BorderColor  "black"
-# BorderTileBackground "bisque"
-# BorderTileForeground "bisque"
- DefaultBackground "rgb:2/a/9"
- DefaultForeground "gray85"
- IconBackground  "rgb:2/a/9"
- IconForeground  "black"
- IconBorderColor  "black"
- IconManagerBackground "rgb:2/a/9"
- IconManagerForeground "black"
- IconManagerHighlight "black"
- MenuBackground  "rgb:2/a/9"
- MenuForeground  "black"
- MenuShadowColor  "black"
- MenuTitleBackground "black"
- MenuTitleForeground "white"
- TitleBackground  "gray75"
- TitleForeground  "black"
-}
+                                                        
+Color
+{
+    MenuBackground        "gray50"
+    MenuForeground        "blue"
+    BorderColor            "red" { "XTerm" "yellow" }
+    TitleForeground        "yellow"
+    TitleBackground        "blue"
+}                                                                                  
+        
 
 # Controls shape of cursor under various conditions.
 Cursors {
