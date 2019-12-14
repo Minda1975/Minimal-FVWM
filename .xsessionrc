@@ -1,0 +1,6 @@
+#!/bin/bash
+xsetroot -solid \#006060
+setxkbmap -layout "us,lt,ru" -option "grp:ctrl_shift_toggle"
+
+exec twm
+
