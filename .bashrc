@@ -175,4 +175,8 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -Iv'
 
-LANG=C
+# If the .xsession-errors file is not a symbolic link, delete it and create it as such
+if [ ! -h $HOME/.xsession-errors ]; then
+ /bin/rm $HOME/.xsession-errors
+ ln -s /dev/null $HOME/.xsession-errors
+fi

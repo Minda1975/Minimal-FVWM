@@ -1,5 +1,5 @@
 #!/bin/bash
-xsetroot -solid \#080200
+xsetroot -solid \#070117
 setxkbmap -layout "us,lt,ru" -option "grp:ctrl_shift_toggle"
 xclock -bg 'rgb:2/a/9' -fg black -digital -geometry '-0-0' -padding 0 &
 
