@@ -1,6 +1,4 @@
 XTerm*faceName:          Fixed
 XTerm*faceSize:          11
-XTerm*background:       black
-XTerm*foreground: green
-XTerm*cursorColor: green
+
 
