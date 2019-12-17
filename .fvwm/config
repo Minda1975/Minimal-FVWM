@@ -1,6 +1,6 @@
 # fvwm window configuration
 # for ogis <m.celiesius@yandex.ru>
-
+ImagePath $HOME/icons:+:/usr/include/X11/bitmaps
 #Start up
 DestroyFunc StartFunction
 AddToFunc StartFunction
@@ -28,13 +28,13 @@ MenuStyle * Foreground gold, Background #000060, Greyed #202080
 Mouse 1 R A Menu Root-Menu Nop
 AddtoMenu Root-Menu "Firefox" \
   Exec exec firefox-esr
-+ "Terminal" Exec exec xterm -bg midnightblue -fg white
-+ "Rxvt" Exec exec urxvt
++ "Terminal" Exec exec xterm -bg midnightblue -fg white -fa "Terminus" -fs 10
++ "Rxvt" Exec exec urxvt -fg white -bg DarkRed -fn -*-terminus-bold-*-*-*-18-*-*-*-*-*-iso8859-*
 + "Files" Exec exec xfe
-+ "Music" Exec exec xterm -bg midnightblue -fg white -e mocp
++ "Music" Exec exec xterm -bg midnightblue -fg white -fa "Terminus" -fs 10 -e mocp
 + "Audacious" Exec exec audacious
-+ "IRC" Exec exec xterm -bg midnightblue -fg white -e irssi
-+ "NNN" Exec exec urxvt -e nnn 
++ "IRC" Exec exec xterm -bg midnightblue -fg white -fa "Terminus" -fs 10 -e irssi
++ "NNN" Exec exec urxvt -fg white -bg DarkRed -fn -*-terminus-bold-*-*-*-18-*-*-*-*-*-iso8859-* -e nnn 
 + "Xfimage" Exec exec xfimage
 + "Xfwrite" Exec exec xfwrite
 + "Gvim" Exec exec gvim
@@ -170,10 +170,10 @@ Mouse 3 FTSI A RaiseLower
 *FvwmButtons(8x1+0+4, Swallow(UseOld,Respawn) \
   XLoad "Exec xload -nolabel -geometry 128x12+0+0 -bg dimgrey -fg white")
 
-*FvwmButtons(2x2+0+0, Action "Desk 0 0")
-*FvwmButtons(2x2+2+0, Action "Desk 0 1")
-*FvwmButtons(2x2+0+2, Action "Desk 0 2")
-*FvwmButtons(2x2+2+2, Action "Desk 0 3")
+*FvwmButtons(2x2+0+0, Icon zero.xpm, Action "Desk 0 0")
+*FvwmButtons(2x2+2+0, Icon one.xpm, Action "Desk 0 1")
+*FvwmButtons(2x2+0+2, Icon two.xpm, Action "Desk 0 2")
+*FvwmButtons(2x2+2+2, Icon three.xpm, Action "Desk 0 3")
 
 Style FvwmButtons ClickToFocus, NoTitle, NoHandles, Sticky, WindowListSkip
 

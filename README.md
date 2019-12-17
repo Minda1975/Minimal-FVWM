@@ -1,7 +1,7 @@
 # Minimal-FVWM
 Minimal Fvwm configuration for Debian Buster system. With only 866 pkg you can hace a fully working system without bloating stuff. 
 
-FVWM config is shamely stolen from [Knuth](https://www-cs-faculty.stanford.edu/~knuth/programs/.fvwm2rc) Fvwm config and adapted for modern FVWM config. Maybe it is the best FVWM config. It have 4 virtual desktops, buttons to switch virtual desktops, asclock, for clock and xload (as system load viewer). This is nicely integated with FVWMButtons module. 
+FVWM config is shamely stolen from [Knuth](https://www-cs-faculty.stanford.edu/~knuth/programs/.fvwm2rc) Fvwm config and adapted for modern FVWM config. Maybe it is the best FVWM config. It have 4 virtual desktops, buttons to switch virtual desktops with icons (in folder "icons"), asclock, for clock and xload (as system load viewer). This is nicely integated with FVWMButtons module. 
 
 Dependencies:
 
@@ -30,6 +30,8 @@ Also, i added color schemes for window decorations (it is in CdeColors folder). 
 ![Screenshot](screen_2.png?raw=true "Bussy")
 ![Screenshot](screen_3.png?raw=true "Bussy")
 ![Screenshot](screen_4.png?raw=true "Bussy")
+![Screenshot](screen_5.png?raw=true "Bussy")
+
 
 
 
