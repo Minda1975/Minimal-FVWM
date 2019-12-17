@@ -4,11 +4,16 @@
 #Start up
 DestroyFunc StartFunction
 AddToFunc StartFunction
-+ I  Exec exec xsetroot -solid \#070117
++ I  Exec exec xsetroot -solid \#001860
++ I Module FvwmButtons
 
 DestroyFunc InitFunction
 AddToFunc InitFunction
 + I Exec exec setxkbmap -layout "us,lt,ru" -option "grp:ctrl_shift_toggle"
++ "I" Desk 0 0
++ "I" Exec exec xeyes -geometry 55x50+1231+0 -fg DarkGreen -center Orange -outline dimgrey
++ "I" Wait xeyes
++ "I" Echo ready...
 
 # "gainsboro" is a light grey; it's for the active window border
 HilightColor black gainsboro
@@ -27,15 +32,25 @@ AddtoMenu Root-Menu "Firefox" \
 + "Rxvt" Exec exec urxvt
 + "Files" Exec exec xfe
 + "Music" Exec exec xterm -bg midnightblue -fg white -e mocp
++ "Audacious" Exec exec audacious
 + "IRC" Exec exec xterm -bg midnightblue -fg white -e irssi
 + "NNN" Exec exec urxvt -e nnn 
 + "Xfimage" Exec exec xfimage
 + "Xfwrite" Exec exec xfwrite
++ "Gvim" Exec exec gvim
++ "Diff" Exec exec fldiff
++ "Torrents" Exec exec transmission-gtk
 + "" Nop
-+ "Restart" Restart
++ "Exit Fvwm" Popup Quit-Verify
+AddToMenu Quit-Verify "Really Quit Fvwm?" Title 
++ ""Nop
++ "Yes, Log Me Out" Quit
 + "" Nop
-+ "Exit Fvwm" Quit
++ "No, Sorry ... I Didn't Mean It" Nop
 + "" Nop
++ "Try To Refresh"   Refresh
+#+ "Try To Recapture" Recapture
++ "Try To Restart"   Restart 
 + "Window-Ops"       Popup Window-Ops
 AddToMenu Window-Ops "Window Operations" Title
 + "Move" Move
@@ -77,6 +92,7 @@ Style * DecorateTransient
 Style * IconBox 700x84-220+12, IconFill right bottom
 Style * SmartPlacement, RandomPlacement
 Style * MinOverlapPlacement
+Style XEyes NoTitle, StaysOnTop, Sticky, WindowListSkip
 
 # handle desktop edges, we dont want them for desktop switching
 EdgeScroll 0 0
@@ -132,6 +148,33 @@ Mouse 2 FTSI A Iconify
 Mouse 3 FTSI A RaiseLower
 
 
+# Now comes the fun part: Buttons to push that will take me from one
+# desktop to another.
+#
+# Being a control freak, I am not trusting FvwmButtons to find the
+# correct button layout; I'm building it myself. The goal is
+# to have a 64x64 ASClock at the upper right, preceded by four 32x32 buttons
+# that will aim my display at another desktop, all above a 16x128 CPU load
+# display. Geometry-wise, I consider it to be an 8x5 grid of 16x16 squares
+# (although I could have regarded it as a 4x5 grid of 32x16s).
+# The border adds 4 pixels.
 
+*FvwmButtonsRows 5
+*FvwmButtonsColumns 8
+*FvwmButtonsGeometry 132x84-0+0
+*FvwmButtonsBoxSize fixed
+*FvwmButtonsFont None
+*FvwmButtonsBack Orange
+*FvwmButtonsPadding 0 0
+*FvwmButtons(4x4+4+0, Swallow(UseOld,Respawn) ASClock "Exec exec asclock")
+*FvwmButtons(8x1+0+4, Swallow(UseOld,Respawn) \
+  XLoad "Exec xload -nolabel -geometry 128x12+0+0 -bg dimgrey -fg white")
+
+*FvwmButtons(2x2+0+0, Action "Desk 0 0")
+*FvwmButtons(2x2+2+0, Action "Desk 0 1")
+*FvwmButtons(2x2+0+2, Action "Desk 0 2")
+*FvwmButtons(2x2+2+2, Action "Desk 0 3")
+
+Style FvwmButtons ClickToFocus, NoTitle, NoHandles, Sticky, WindowListSkip
 
 
