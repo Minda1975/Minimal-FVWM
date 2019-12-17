@@ -112,13 +112,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Simple prompt
-if [ -n "$SSH_CONNECTION" ]; then
-	export PS1="\u@\h: \w \$ "
-else
-	export PS1="\w \$ "
-fi
-export PS2="> "
+# My prompt
+export PS1='\n\e[1;30m[\j:\!\e[1;30m]\e[0;36m \T \d \e[1;30m[\e[1;34m\u@\H\e[1;30m:\e[0;37m`tty 2>/dev/null` \e[0;32m+${SHLVL}\e[1;30m] \e[1;37m\w\e[0;37m\[\033]0;[ ${H1}... ] \w - \u@\H +$SHLVL @`tty 2>/dev/null` - [ `uptime` ]\007\]\n\[\]\$ '
 
 
 
@@ -175,8 +170,3 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -Iv'
 
-# If the .xsession-errors file is not a symbolic link, delete it and create it as such
-if [ ! -h $HOME/.xsession-errors ]; then
- /bin/rm $HOME/.xsession-errors
- ln -s /dev/null $HOME/.xsession-errors
-fi

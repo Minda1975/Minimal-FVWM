@@ -1,4 +1,2 @@
-XTerm*faceName:          Fixed
-XTerm*faceSize:          11
-
-
+URxvt*font:     xft:mono:medium:size=10
+XTerm*faceName: xft:mono:medium:size=10

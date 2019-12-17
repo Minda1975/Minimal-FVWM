@@ -1,0 +1,8 @@
+lftp -c "torrent $1"
+
+or lftp -e "torrent $1"
+
+where $1 is the .torrent file.
+
+
+ps x | fgrep lftp

@@ -1,230 +1,137 @@
-##############################################################################
-#                                                                             #
-# Menus                                                                       #
-#                                                                             #
-###############################################################################
+# fvwm window configuration
+# for ogis <m.celiesius@yandex.ru>
 
-AddToMenu RootMenu "Root Menu" Title
-+ "&Terminal"         Exec exec x-terminal-emulator || xterm -geometry 85x30+0+0
-+ "&Web"              Exec exec firefox
-+ "&Audio"            Exec exec xterm -e mocp
-+ "&Torrents"         Exec exec transmission-gtk
-+ ""                  Nop
-+ "&Window Ops"       Popup Window-Ops
-+ "&X11 Session"      Popup X11-Session
+#Start up
+DestroyFunc StartFunction
+AddToFunc StartFunction
++ I  Exec exec xsetroot -solid \#070117
 
-AddToMenu Window-Ops
-+ "&Move"             Move
-+ "&Resize"           Resize
-+ "&Stick"            Stick
-+ ""                  Nop
-+ "&Close"            Close
-+ "&Destroy"          Destroy
+DestroyFunc InitFunction
+AddToFunc InitFunction
++ I Exec exec setxkbmap -layout "us,lt,ru" -option "grp:ctrl_shift_toggle"
 
-AddToMenu X11-Session
-+ "Re&fresh Screen"   Refresh
-+ "&Restart WM"       Restart
-+ ""                  Nop
-+ "Exit WM"           Quit
+# "gainsboro" is a light grey; it's for the active window border
+HilightColor black gainsboro
 
+# I tried mxn desktops and didn't like them. 
+DeskTopSize 1x1
 
-###############################################################################
-#                                                                             #
-# Keyboard & Mouse Bindings                                                   #
-#                                                                             #
-###############################################################################
+MenuStyle * FVWM
+MenuStyle * Foreground gold, Background #000060, Greyed #202080
 
-# Ignore the "Numlock" key so it does not interfere with keyboard shortcuts
-#
-IgnoreModifiers L2
+# setup root-menu and populate it
+Mouse 1 R A Menu Root-Menu Nop
+AddtoMenu Root-Menu "Firefox" \
+  Exec exec firefox-esr
++ "Terminal" Exec exec xterm -bg midnightblue -fg white
++ "Rxvt" Exec exec urxvt
++ "Files" Exec exec xfe
++ "Music" Exec exec xterm -bg midnightblue -fg white -e mocp
++ "IRC" Exec exec xterm -bg midnightblue -fg white -e irssi
++ "NNN" Exec exec urxvt -e nnn 
++ "Xfimage" Exec exec xfimage
++ "Xfwrite" Exec exec xfwrite
++ "" Nop
++ "Restart" Restart
++ "" Nop
++ "Exit Fvwm" Quit
++ "" Nop
++ "Window-Ops"       Popup Window-Ops
+AddToMenu Window-Ops "Window Operations" Title
++ "Move" Move
++ "Resize" Resize
++ "Raise" Raise
++ "Lower" Lower
++ "Iconify/DeIconify" Iconify
++ "Stick/UnStick" Stick
++ "Maximize/Normalize" Maximize
++ "Refresh" RefreshWindow
++ "" Nop
++ "Delete" Delete
++ "Close" Close
++ "Destroy" Destroy
+
+# allow for screen locking and other things
+# control-F to maximize, control-C to center
+Key W A 4 Close
+Key C A 4 Exec exec dmenu_run
+Key Escape A 4 Exec exec slock
+Key F12 A 4 Quit
+Key F A 4 Maximize 
+Key I A 4 Iconify
+
+# ignore numlock and caps lock weirdness
+IgnoreModifiers L25
 
 #Unbind Menu
 
 Key F1 R A - 
 
-
-# Ctrl+Alt program shortcuts
-#
-Key C A CM            Exec exec scrot
-Key K A CM            Close
-Key M A CM            Menu RootMenu Nop
-Key R A CM            Restart
-Key T A CM            Exec exec x-terminal-emulator || xterm
-Key N A CM            Exec exec dmenu_run
-Key I A CM            Iconify
-Key F A CM            Maximize
-
-# Simple default mouse bindings for the root window:
-#
-Mouse 1 R A           Menu RootMenu Nop
-Mouse 2 R A           Menu Window-Ops Nop
-Mouse 3 R A           WindowList
-
-# ... and for the title bar buttons:
-#
-Mouse 0 1 A           Menu Window-Ops Close
-Mouse 0 2 A           Maximize
-Mouse 0 4 A           Iconify
-
-# ... and other parts of the windows / borders / icons:
-#
-Mouse 1 FS A          Resize-or-Raise
-Mouse 1 T A           Move-or-Raise
-Mouse 1 I A           Move-or-Iconify
-Mouse 2 I A           Iconify
-Mouse 2 FST A         Menu Window-Ops Nop
-Mouse 3 TSIF A        RaiseLower
-Mouse 1         SF    A RaiseOrShade
-
-###############################################################################
-#                                                                             #
-# Init & Restart Functions                                                    #
-#                                                                             #
-###############################################################################
-
-DestroyFunc StartFunction
-AddToFunc StartFunction
-+ I Module FvwmCommandS
-+ I Module FvwmPager 0 2 
-+ I Test (Init) Schedule 10000 Exec exec conky -q
-+ I  Exec exec xsetroot -solid \#5c2316
-
-DestroyFunc InitFunction
-AddToFunc InitFunction
-+ I Exec exec setxkbmap -layout "us,lt,ru" -option "grp:ctrl_shift_toggle"
-+ I Exec exec xterm -geometry 85x30+0+0
-
-DestroyFunc FuncShadeMe
-AddToFunc FuncShadeMe
-+ I PipeRead `case $[func.context] in "t") \
-    echo 'ThisWindow (Shaded) WindowStyle TitleAtTop'; echo 'WindowShade toggle';; \
-    "[") echo 'ThisWindow (!Shaded) WindowStyle TitleAtLeft' && echo 'WindowShade [';; \
-    "]") echo 'ThisWindow (!Shaded) WindowStyle TitleAtRight' && echo 'WindowShade ]';; \
-    "-") echo 'ThisWindow (!Shaded) WindowStyle TitleAtTop' && echo 'WindowShade -';; \
-    "_") echo 'ThisWindow (!Shaded) WindowStyle TitleAtBottom' && echo 'WindowShade _';;esac`
-
-DestroyFunc RaiseOrShade
-AddToFunc   RaiseOrShade
-+ C     Raise
-+ D     FuncShadeMe
-
-DestroyFunc RestartFunction
-AddToFunc RestartFunction
-+ I Nop
-
-DestroyFunc SessionInitFunction
-AddToFunc SessionInitFunction
-+ I Nop
-
-DestroyFunc SessionRestartFunction
-AddToFunc SessionRestartFunction
-+ I Nop
-
-###############################################################################
-#                                                                             #
-# Custom Functions                                                            #
-#                                                                             #
-###############################################################################
-
-DestroyFunc Move-or-Raise
-AddToFunc Move-or-Raise
-+ I Raise
-+ M Move
-
-DestroyFunc Move-or-Iconify
-AddToFunc Move-or-Iconify
-+ I Raise
-+ M Move
-+ D Iconify
-
-DestroyFunc Resize-or-Raise
-AddToFunc Resize-or-Raise
-+ I Raise
-+ M Resize
-
-
-
-###############################################################################
-#                                                                             #
-# Basic Style Settings                                                        #
-#                                                                             #
-###############################################################################
-
-DefaultFont xft:Sans:Normal:size=10:antialias=True
-Emulate Mwm
-MenuStyle * Fvwm
-Style * BorderWidth 6
-Style * ClickToFocus
+# handle window changes nicely
+Module FvwmAuto 1000 Raise Nop
+Style * FocusFollowsMouse
+Style * BorderWidth 7, HandleWidth 7
+Style * Color white/dimgrey
+Style * MWMFunctions, MWMDecor, MWMButtons, HintOverride, OLDecor
 Style * DecorateTransient
-Style * EdgeMoveDelay 250
-Style * EdgeMoveResistance 10
-Style * Font StringEncoding=UTF-8:xft:Sans:Bold:size=10:antialias=True
-Style * HandleWidth 6
-Style * HintOverride
-Style * IconBox 1 -300 -1 -1, IconFill Left Bottom
-Style * FvwmBorder
-Style * FvwmButtons
-Style * TileCascadePlacement
-Style * !UsePPosition
-TitleStyle Centered Height 20
+Style * IconBox 700x84-220+12, IconFill right bottom
+Style * SmartPlacement, RandomPlacement
+Style * MinOverlapPlacement
 
-Style Fvwm* BorderWidth 2
-Style Fvwm* CirculateSkip
-Style Fvwm* CirculateSkipIcon
-Style Fvwm* Sticky
-Style Fvwm* !Title
-Style Fvwm* WindowListSkip
+# handle desktop edges, we dont want them for desktop switching
+EdgeScroll 0 0
+EdgeThickness 0
 
-# Color Scheme Prism
-Colorset 0 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
-Colorset 1 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
-Colorset 2 fg black, bg rgb:da/7d/2b, hi, sh, Plain, NoShape
-Colorset 3 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
-Colorset 4 fg black, bg rgb:da/7d/2b, hi, sh, Plain, NoShape
-Colorset 5 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
-Colorset 6 fg black, bg rgb:ba/81/6d, hi, sh, Plain, NoShape
-Colorset 7 fg white, bg rgb:2e/66/8e, hi, sh, Plain, NoShape
-Colorset 8 fg black, bg rgb:b6/63/5e, hi, sh, Plain, NoShape
+Mouse 0 1 A Close
+ButtonStyle 1 Vector 7 \
+  65x15@0 25x55@1 45x55@0 35x85@1 75x45@0 55x45@1 65x15@0
+ButtonStyle 1 - MWMDecorMenu
 
+# add button in upper right to iconify
+Mouse 0 2 A Iconify
+ButtonStyle 2 Vector 5 40x40@1 60x40@1 60x60@0 40x60@0 40x40@1
+ButtonStyle 2 - MWMDecorMin
 
-Style * Colorset 1, HilightColorset 2, \
-        BorderColorset 3, HilightBorderColorset 4
-
-# MenuStyles
-MenuStyle * MenuColorset 5, ActiveColorset 6, GreyedColorset 7, TitleColorset 8
+# Next to that, a button with a big square; this one maximizes the window.
+# (More precisely, if you double-click, the window goes to full screen size;
+# if you single-click, it goes to full height but keeps its width.
+# But if the window was already in "maximized" state, it goes back to normal.
+# If you try to drag this button, it unconditionally goes to full width.)
+Mouse 0 4 A Maximize-Function
+ButtonStyle 4 Vector 5 20x20@1 80x20@1 80x80@0 20x80@0 20x20@1
+AddtoFunc Maximize-Function "D" Maximize 
++                           "C" Maximize 
++                           "M" Function Go-Max
+AddtoFunc Go-Max  "I" Current (Maximized) Maximize
++                 "I" Maximize 
+ButtonStyle 4 - MWMDecorMax
 
 
-#####
-# Virtual Desktops
-###########
-DesktopSize 3x3
-DesktopName 0 Main
-DesktopName 1 Work
-DesktopName 2 Terminals
-EdgeScroll 100 100
-EdgeResistance 150
-Style * EdgeMoveDelay 150
-Style * EdgeMoveResistance 150
-EdgeThickness 1
+# Ordinary windows also have title bar ("T"), corner frames ("F"),
+# side frames ("S"), or iconic state ("I"). Left mouse in the corner
+# will resize or raise; in the title or on the side it will move or raise;
+# double raising is lowering. Left mouse on an icon moves the icon,
+# or deiconifies it on double-click.
+Mouse 1 F A Resize-or-Raise
+Mouse 1 TS A Move-or-Raise
+Mouse 1 I A Move-or-DeIconify
+AddToFunc Resize-or-Raise "I" Raise
++ "M" Resize
++ "D" Lower
+AddToFunc Move-or-Raise "I" Raise
++ "M" Move
++ "D" Lower
+AddToFunc Move-or-DeIconify "I" Raise
++ "M" Move
++ "D" Iconify
+
+# Middle mouse iconifies or deiconifies.
+Mouse 2 FTSI A Iconify
+
+# Right mouse raises or lowers.
+Mouse 3 FTSI A RaiseLower
 
 
 
-#####
-# FvwmPager
-###########
-Style "FvwmPager" NoTitle, Handles, Borders, Sticky, WindowListSkip, \
-  CirculateSkip, StaysOnBottom, FixedPosition, FixedSize
-
-
-###############################################################################
-*FvwmPager: Geometry 150x150+0+0
-*FvwmPager: BalloonYOffset +2
-*FvwmPager: Font "xft:Sans:Bold:pixelsize=12:minspace=True:antialias=True"
-*FvwmPager: Balloons All
-*FvwmPager: BalloonFont "xft:Sans:Bold:pixelsize=12:minspace=True:antialias=True"
-*FvwmPager: Window3dBorders
-*FvwmPager: MiniIcons
-*FvwmPager: UseSkipList
-*FvwmPager: Rows 3
 
 

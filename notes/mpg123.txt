@@ -1,0 +1,11 @@
+﻿mpg123 -vC *.mp3
+ mpg123 -o pulse *.mp3
+
+ mpg123 -o pulse http://ice2.somafm.com/indiepop-128-mp3
+
+cd Cypress\ Hill\ -\ Elephants\ on\ Acid\ \(2018\)/
+
+mpg123 -o pulse *.mp3
+
+
+7z x
