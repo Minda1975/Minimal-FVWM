@@ -31,6 +31,7 @@ Also, i added color schemes for window decorations (it is in CdeColors folder). 
 ![Screenshot](screen_3.png?raw=true "Bussy")
 ![Screenshot](screen_4.png?raw=true "Bussy")
 ![Screenshot](screen_5.png?raw=true "Bussy")
+![Screenshot](screen_6.png?raw=true "Bussy")
 
 
 
