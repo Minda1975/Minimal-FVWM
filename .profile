@@ -26,3 +26,8 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 PATH=$HOME/.local/bin:$PATH
+
+if [ $(tty) = "/dev/tty1" ]; then
+        startx &> /dev/null
+### without exec stay logged in after X
+fi
