@@ -1,0 +1,35 @@
+# set font for menus
+fontname                "terminus:pixelsize=14"
+
+#Change keyboard layout
+bind-key M-F1 setxkbmap us
+bind-key M-F2 setxkbmap lt
+bind-key M-F3 setxkbmap ru
+
+#Colors
+color activeborder    "#195465" 
+color inactiveborder  slategrey
+color menubg    "#0a0f14"
+color menufg   "#d26939" 
+color font            grey90
+color selfont   "#0a0f14"
+color groupborder     "#c33027" 
+
+# groups predefined, use xprop to get these from each program
+autogroup 1     "Navigator,Firefox-esr"
+autogroup 2     "urxvt,URxvt"
+autogroup 2     "xterm,XTerm"
+autogroup 2     "xterm,UXTerm"
+autogroup 3     "xfe,Xfe"
+
+# inherit current selected group
+sticky yes
+
+# application menu
+command firefox  firefox-esr
+command urxvtc   urxvtc
+command xterm    xterm
+command urxvtc   urxvtc
+command uxterm   uxterm
+command xfe      xfe
+command transmission transmission-gtk
