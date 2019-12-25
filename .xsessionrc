@@ -1,7 +1,11 @@
 #!/bin/bash
-xsetroot -solid \#070117
-setxkbmap -layout "us,lt,ru" -option "grp:ctrl_shift_toggle"
-xclock -bg blue -fg white -digital -geometry '-0-0' -padding 0 &
 
-exec twm
+# Load resources
+xrdb -merge .Xresources
+xsetroot -solid \#2F4F4F
 
+#Apps
+xscreensaver -no-splash &
+urxvtd -q -f -o
+
+exec openbsd-cwm
