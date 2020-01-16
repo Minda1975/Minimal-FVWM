@@ -1,0 +1,1 @@
+cp example.iso /dev/sdX ; sync
